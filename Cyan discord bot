@@ -1,0 +1,55 @@
+import discord
+from discord.ext import commands
+import pyjokes
+# Client
+client = commands.Bot(command_prefix="<")
+
+# Joke
+joke = pyjokes.get_joke()
+
+# Commands
+@client.event
+async def on_ready():
+    print("Bot Is Ready")
+
+@client.command()
+async def hello(ctx):
+    await ctx.send(f"Hi {ctx.author.name}")
+
+@client.command()
+async def ip(ctx):
+    await ctx.send("The Ip Is - 'smpworld0.aternos.me'")
+
+@client.command()
+async def command(ctx):
+    await ctx.send("""Commands Are
+    1.<hello
+    2.<hi
+    3.<ip
+    4.<botname
+    5.<mention
+    6.<me""")
+
+@client.command()
+async def hi(ctx):
+    await ctx.send(f"What's Up {ctx.author.name}")
+
+@client.command()
+async def botname(ctx):
+    await ctx.send("My Name Is Cyan")
+
+@client.command()
+async def me(ctx):
+    await ctx.send(f"You Are {ctx.author.name}")
+
+@client.command(aliases=['user','info'])
+@commands.has_permissions(kick_members=True)
+async def mention(ctx, memeber : discord.Member):
+    embed = discord.Embed(title=memeber.name, description=memeber.mention, color=discord.Color.blue())
+    embed.add_field(name="ID", value=memeber.id, inline=True)
+    embed.set_thumbnail(url=memeber.avatar_url)
+    embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Requested by {ctx.author.name}")
+    await ctx.send(embed=embed)
+
+# Bot Connector
+client.run("Nzk2MzQ5MDM1MTYxNDUyNTU0.X_Wn1Q.LbbZaIxIzZhoVk3Y4V_KsVaAqMY")
